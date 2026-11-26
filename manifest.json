@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "网页 MIUI 化",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "一键把任意网页换成 MIUI 风格：复古 MIUI 1、扁平 MIUI 6、灵动 HyperOS 三套主题，橙色强调色、圆角卡片、复古图标贴纸与状态条。粉丝自制，非小米官方发布；设置仅保存在本机。",
   "icons": {
     "16": "icons/icon16.png",

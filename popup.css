@@ -1,5 +1,11 @@
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html, body {
+  margin: 0; padding: 0;
+  /* 禁用 Android WebView 字体自动放大（text autosizing）：
+     本弹窗字号刻意偏小（9–15px），不锁死会被真机自动撑大，整页显得“可大了” */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body {
   min-width: min(300px, 100vw);
   width: 100%;
@@ -85,3 +91,27 @@ body {
   border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); color: #cfd4dd; font-size: 12px; font-weight: 600; }
 .reset:hover { background: rgba(255,255,255,.09); }
 .disclaimer { text-align: center; font-size: 10px; color: #9aa1ad; margin: 13px 0 0; }
+
+/* 小容器紧凑模式（skill §0 的 compact 口径）：手机 / Pad 弹窗普遍 ≤600px，
+   收紧桌面级控件尺寸，避免在窄弹窗里显得过大 */
+@media (max-width: 600px) {
+  .wrap { padding: 12px 12px 16px; }
+  .head { gap: 9px; padding-bottom: 10px; }
+  .logo { width: 28px; height: 28px; border-radius: 9px; }
+  .head h1 { font-size: 14px; }
+  .group { margin-top: 12px; }
+  .group-title { margin-bottom: 8px; }
+  .theme {
+    min-height: 50px; padding: 6px 8px; column-gap: 9px;
+    grid-template-columns: 44px 1fr;
+  }
+  .swatch { width: 44px; height: 34px; padding: 5px; border-radius: 7px; }
+  .theme-name { font-size: 12px; }
+  .colors { gap: 6px; margin-bottom: 10px; }
+  .color { width: 28px; height: 28px; border-radius: 8px; }
+  .color.custom { font-size: 14px; }
+  .radius-row button { min-height: 32px; font-size: 11px; }
+  .status { margin-top: 12px; min-height: 24px; }
+  .reset { min-height: 36px; font-size: 11px; }
+  .disclaimer { margin-top: 10px; }
+}

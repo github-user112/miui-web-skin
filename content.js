@@ -31,7 +31,11 @@
       radius: typeof radius === "number" && radius >= 0 && radius < RADIUS_PX.length ? radius : null,
       features: {}
     };
-    FEATURES.forEach(function (k) { state.features[k] = features[k] !== false; });
+    // 缺失的开关必须回落 DEFAULTS（如 icons 默认关闭），不能一律当 true：
+    // 否则旧版/部分写入的 features 对象会把图标贴纸意外打开，破坏站点按钮图标
+    FEATURES.forEach(function (k) {
+      state.features[k] = features[k] === undefined ? DEFAULTS.features[k] !== false : features[k] !== false;
+    });
     return state;
   }
 

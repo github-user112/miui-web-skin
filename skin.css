@@ -55,7 +55,18 @@ html[data-miui-skin][data-miui-feature-accent="on"] ::selection {
 html[data-miui-skin][data-miui-feature-accent="on"] :is(a, .link) {
   color: var(--miui-accent) !important;
 }
-html[data-miui-skin][data-miui-feature-accent="on"] :is(button, .btn, input[type="submit"], input[type="button"]):not(:disabled) {
+/* 纯文字提交按钮（input）无图标内容，上色安全 */
+html[data-miui-skin][data-miui-feature-accent="on"] :is(input[type="submit"], input[type="button"]):not(:disabled) {
+  background-color: var(--miui-accent) !important;
+  color: var(--miui-on-accent) !important;
+  border-color: transparent !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 16px rgba(255, 122, 47, .22) !important;
+}
+/* button/.btn 只给「纯文字」按钮上色：跳过带 aria-label/title 的无障碍标签按钮与含 svg 的图标按钮。
+   视频播放器控件、工具栏图标钮都是透明底 + 图标，之前一律上色会把它们变成橙色色块，破坏真实站点 UI。
+   :has() 不支持的旧内核会整条丢弃本规则 → 按钮不上色，宁可少特效也不破坏页面。 */
+html[data-miui-skin][data-miui-feature-accent="on"] :is(button, .btn):not(:disabled):not([aria-label]):not([title]):not(:has(svg)) {
   background-color: var(--miui-accent) !important;
   color: var(--miui-on-accent) !important;
   border-color: transparent !important;
@@ -67,13 +78,21 @@ html[data-miui-skin][data-miui-feature-accent="on"] :is(input, textarea, select)
   border-color: color-mix(in srgb, var(--miui-accent) 40%, transparent) !important;
   outline-color: var(--miui-accent) !important;
 }
-html[data-miui-skin="hyper"][data-miui-feature-accent="on"] :is(button, .btn, input[type="submit"], input[type="button"]):not(:disabled) {
+html[data-miui-skin="hyper"][data-miui-feature-accent="on"] :is(input[type="submit"], input[type="button"]):not(:disabled) {
+  background-image: linear-gradient(120deg, var(--miui-accent), var(--miui-accent-2)) !important;
+  color: #210c03 !important;
+}
+html[data-miui-skin="hyper"][data-miui-feature-accent="on"] :is(button, .btn):not(:disabled):not([aria-label]):not([title]):not(:has(svg)) {
   background-image: linear-gradient(120deg, var(--miui-accent), var(--miui-accent-2)) !important;
   color: #210c03 !important;
 }
 
-/* 圆角：只作用于语义明确的卡片与控件，不再强改 article/section */
-html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel, button, .btn, input, textarea, select, img, figure) {
+/* 圆角：只作用于语义明确的卡片与控件；不再给全站 img/figure 强加圆角（会破坏缩略图/海报布局），
+   仅卡片内的图片跟随圆角 */
+html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel, button, .btn, input, textarea, select) {
+  border-radius: var(--miui-radius) !important;
+}
+html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel) :is(img, figure) {
   border-radius: var(--miui-radius) !important;
 }
 html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel) {
@@ -140,7 +159,9 @@ html[data-miui-skin="hyper"] :is(header, nav, main, article, section, aside, foo
   color: #eef0f6;
   border-color: rgba(255, 255, 255, .14);
 }
-html[data-miui-skin="hyper"] :is(header, nav, main, article, section, aside, footer, .card, .panel, .container, .content, .post, .entry, .navbar, .header, .footer, #header, #footer, td, th, pre, blockquote) > :is(h1, h2, h3, h4, p, li, span, strong, em, small, time) {
+/* 文字对齐只压到块级文字（标题/段落/列表）；不再强制 span/strong/em/small/time ——
+   这些内联元素常承载站点语义色（价格红、VIP 金、角标色），强制继承会破坏真实站点 UI */
+html[data-miui-skin="hyper"] :is(header, nav, main, article, section, aside, footer, .card, .panel, .container, .content, .post, .entry, .navbar, .header, .footer, #header, #footer, td, th, pre, blockquote) > :is(h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption) {
   color: inherit !important;
 }
 /* 链接保留强调色，保证可辨识（M8） */

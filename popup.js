@@ -11,6 +11,8 @@
   var FEATURES = Object.keys(DEFAULTS.features);
   var RADIUS = [8, 12, 20, 28];
   var statusEl = document.getElementById("status");
+  var customColorEl = document.getElementById("customColor");
+  var colorTimer = null;
   var state = normalize(DEFAULTS);
 
   function normalize(saved) {
@@ -22,7 +24,10 @@
       radius: typeof saved.radius === "number" && saved.radius >= 0 && saved.radius < RADIUS.length ? saved.radius : null,
       features: {}
     };
-    FEATURES.forEach(function (k) { out.features[k] = features[k] !== false; });
+    // 同 content.js：缺失的开关回落 DEFAULTS，避免旧版数据把图标贴纸意外打开
+    FEATURES.forEach(function (k) {
+      out.features[k] = features[k] === undefined ? DEFAULTS.features[k] !== false : features[k] !== false;
+    });
     return out;
   }
 
@@ -49,6 +54,7 @@
       var input = document.querySelector('[data-feature="' + k + '"]');
       if (input) input.checked = state.features[k] !== false;
     });
+    customColorEl.value = state.accent || "#ff7a2f"; // 与状态同步（含恢复默认后）
   }
 
   function persist(message) {
@@ -87,9 +93,21 @@
     persist("强调色已更新：" + state.accent);
   });
 
-  document.getElementById("customColor").addEventListener("input", function (e) {
+  /* 取色器拖动时 input 事件高频触发；每次都落盘会让所有已打开网页反复重建样式。
+     改为 150ms 防抖合并写入，change（选择器关闭/确认）时立即落盘。 */
+  customColorEl.addEventListener("input", function (e) {
     var v = e.target.value;
     if (!/^#[0-9a-f]{6}$/i.test(v)) return;
+    state.accent = v;
+    window.clearTimeout(colorTimer);
+    colorTimer = window.setTimeout(function () {
+      persist("自定义强调色已应用：" + state.accent);
+    }, 150);
+  });
+  customColorEl.addEventListener("change", function (e) {
+    var v = e.target.value;
+    if (!/^#[0-9a-f]{6}$/i.test(v)) return;
+    window.clearTimeout(colorTimer);
     state.accent = v;
     persist("自定义强调色已应用：" + v);
   });
