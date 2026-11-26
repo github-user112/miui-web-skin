@@ -1,0 +1,153 @@
+/* 网页 MIUI 化 · 主题样式：仅在 html[data-miui-skin] 存在时生效 */
+
+html[data-miui-skin] {
+  --miui-accent: #ff7a2f;
+  --miui-accent-2: #ffb15c;
+  --miui-on-accent: #1b0e03;
+  --miui-bg: #f7f4ef;
+  --miui-fg: #27221d;
+  --miui-panel: rgba(255, 255, 255, .78);
+  --miui-radius: 12px;
+  --miui-shadow: 0 8px 24px rgba(80, 40, 10, .13);
+}
+
+/* 复古 MIUI 1 */
+html[data-miui-skin="retro"] {
+  --miui-accent: #ff7a2f;
+  --miui-accent-2: #ffb15c;
+  --miui-bg: #f6f0e7;
+  --miui-fg: #2a1f18;
+  --miui-panel: rgba(255, 252, 246, .9);
+  --miui-radius: 8px;
+}
+/* 扁平 MIUI 6 */
+html[data-miui-skin="flat"] {
+  --miui-accent: #ff6a17;
+  --miui-accent-2: #ff9f43;
+  --miui-bg: #f4f6f9;
+  --miui-fg: #20242c;
+  --miui-panel: rgba(255, 255, 255, .86);
+  --miui-radius: 14px;
+}
+/* 灵动 HyperOS */
+html[data-miui-skin="hyper"] {
+  --miui-accent: #ff9a4d;
+  --miui-accent-2: #ff5f8f;
+  --miui-on-accent: #200d03;
+  --miui-bg: #14161e;
+  --miui-fg: #eef0f6;
+  --miui-panel: rgba(255, 255, 255, .08);
+  --miui-radius: 20px;
+  color-scheme: dark;
+}
+
+html[data-miui-skin] body {
+  background: var(--miui-bg) !important;
+  color: var(--miui-fg);
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", sans-serif;
+}
+html[data-miui-skin][data-miui-feature-accent="on"] ::selection {
+  background: var(--miui-accent) !important;
+  color: var(--miui-on-accent) !important;
+}
+
+/* 强调色：只改背景色，保留站点背景图与语义色；跳过禁用按钮 */
+html[data-miui-skin][data-miui-feature-accent="on"] :is(a, .link) {
+  color: var(--miui-accent) !important;
+}
+html[data-miui-skin][data-miui-feature-accent="on"] :is(button, .btn, input[type="submit"], input[type="button"]):not(:disabled) {
+  background-color: var(--miui-accent) !important;
+  color: var(--miui-on-accent) !important;
+  border-color: transparent !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 16px rgba(255, 122, 47, .22) !important;
+}
+html[data-miui-skin][data-miui-feature-accent="on"] :is(input, textarea, select) {
+  border-color: rgba(255, 122, 47, .45) !important;
+  border-color: color-mix(in srgb, var(--miui-accent) 40%, transparent) !important;
+  outline-color: var(--miui-accent) !important;
+}
+html[data-miui-skin="hyper"][data-miui-feature-accent="on"] :is(button, .btn, input[type="submit"], input[type="button"]):not(:disabled) {
+  background-image: linear-gradient(120deg, var(--miui-accent), var(--miui-accent-2)) !important;
+  color: #210c03 !important;
+}
+
+/* 圆角：只作用于语义明确的卡片与控件，不再强改 article/section */
+html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel, button, .btn, input, textarea, select, img, figure) {
+  border-radius: var(--miui-radius) !important;
+}
+html[data-miui-skin][data-miui-feature-radius="on"] :is(.card, .panel) {
+  background: var(--miui-panel) !important;
+  box-shadow: var(--miui-shadow) !important;
+  border-color: rgba(255, 122, 47, .22) !important;
+  border-color: color-mix(in srgb, var(--miui-accent) 18%, transparent) !important;
+}
+
+/* 复古图标贴纸：默认关闭；只追加在按钮文字之后，不覆盖站点 ::before 图标 */
+html[data-miui-skin][data-miui-feature-icons="on"] :is(button, .btn):not(:disabled)::after {
+  content: " ✦";
+  color: var(--miui-accent) !important;
+  font-weight: 800 !important;
+}
+html[data-miui-skin="retro"][data-miui-feature-icons="on"] :is(button, .btn):not(:disabled)::after { content: " ▣"; }
+html[data-miui-skin="flat"][data-miui-feature-icons="on"] :is(button, .btn):not(:disabled)::after { content: " ◉"; }
+html[data-miui-skin="hyper"][data-miui-feature-icons="on"] :is(button, .btn):not(:disabled)::after { content: " ✧"; }
+
+/* 滚动条（带兜底） */
+html[data-miui-skin] ::-webkit-scrollbar { width: 10px; height: 10px; }
+html[data-miui-skin] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 122, 47, .6);
+  background: color-mix(in srgb, var(--miui-accent) 55%, transparent);
+  border-radius: 99px;
+}
+html[data-miui-skin] ::-webkit-scrollbar-track { background: transparent; }
+
+/* 注入的状态条与角标：全部限定在扩展自己的容器内 */
+#miui-web-skin-overlay { all: unset; }
+#miui-web-skin-overlay .miui-bar__status {
+  position: fixed; z-index: 2147483646; top: 0; left: 0; right: 0;
+  height: 26px; display: none; align-items: center; justify-content: space-between;
+  padding: 0 14px; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  color: var(--miui-fg); background: var(--miui-panel);
+  border-bottom: 1px solid rgba(255, 122, 47, .3);
+  border-bottom-color: color-mix(in srgb, var(--miui-accent) 26%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  pointer-events: none;
+}
+html[data-miui-bar="on"] #miui-web-skin-overlay .miui-bar__status { display: flex; }
+#miui-web-skin-overlay .miui-bar__mark {
+  color: var(--miui-accent); letter-spacing: .18em; font-weight: 900;
+}
+#miui-web-skin-overlay .miui-bar__signal { opacity: .75; }
+
+#miui-web-skin-overlay .miui-float {
+  position: fixed; z-index: 2147483646; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  display: none; flex-direction: column; gap: 2px; padding: 9px 13px;
+  border-radius: 14px; background: var(--miui-panel);
+  border: 1px solid rgba(255, 122, 47, .38);
+  border-color: color-mix(in srgb, var(--miui-accent) 35%, transparent);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  font-size: 11px; line-height: 1.3; pointer-events: none;
+}
+html[data-miui-float="on"] #miui-web-skin-overlay .miui-float { display: flex; }
+#miui-web-skin-overlay .miui-float strong { color: var(--miui-accent); font-size: 12px; }
+#miui-web-skin-overlay .miui-float small { opacity: .65; font-size: 9px; }
+
+/* HyperOS 深色主题：给常见内容容器成对设置深底浅字，避免浅字浅底 */
+html[data-miui-skin="hyper"] :is(header, nav, main, article, section, aside, footer, .card, .panel, .container, .content, .post, .entry, .navbar, .header, .footer, #header, #footer, td, th, pre, blockquote) {
+  background-color: rgba(255, 255, 255, .06);
+  color: #eef0f6;
+  border-color: rgba(255, 255, 255, .14);
+}
+html[data-miui-skin="hyper"] :is(header, nav, main, article, section, aside, footer, .card, .panel, .container, .content, .post, .entry, .navbar, .header, .footer, #header, #footer, td, th, pre, blockquote) > :is(h1, h2, h3, h4, p, li, span, strong, em, small, time) {
+  color: inherit !important;
+}
+/* 链接保留强调色，保证可辨识（M8） */
+html[data-miui-skin="hyper"] a { color: var(--miui-accent) !important; }
+
+/* 复古扫描线 */
+html[data-miui-skin="retro"] #miui-web-skin-overlay::before {
+  content: ""; position: fixed; inset: 0; z-index: 2147483645; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(120, 70, 20, .035) 0 1px, transparent 1px 4px);
+}

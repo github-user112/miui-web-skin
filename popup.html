@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>网页 MIUI 化</title>
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <div>
+      <h1>网页 MIUI 化</h1>
+      <p>给任意网页换一身米粉皮肤</p>
+    </div>
+  </header>
+
+  <div class="group">
+    <div class="group-title">选择主题 <span>对所有授权网页生效</span></div>
+    <div class="themes" id="themes">
+      <button class="theme" type="button" data-skin="retro">
+        <span class="swatch retro"><i></i><i></i><i></i><i></i></span>
+        <span class="theme-name">MIUI 1 复古</span>
+        <span class="theme-desc">暖色纸张 · 方角 · 扫描线</span>
+      </button>
+      <button class="theme" type="button" data-skin="flat">
+        <span class="swatch flat"><i></i><i></i><i></i><i></i></span>
+        <span class="theme-name">MIUI 6 扁平</span>
+        <span class="theme-desc">橙白配色 · 圆角 · 彩色贴纸</span>
+      </button>
+      <button class="theme" type="button" data-skin="hyper">
+        <span class="swatch hyper"><i></i><i></i><i></i><i></i></span>
+        <span class="theme-name">HyperOS 灵动</span>
+        <span class="theme-desc">深色玻璃 · 渐变 · 发光</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title">自定义 <span>覆盖当前主题的默认值</span></div>
+    <div class="colors" id="colors">
+      <button type="button" class="color" data-color="#ff7a2f" style="--c:#ff7a2f" aria-label="小米橙"></button>
+      <button type="button" class="color" data-color="#ff4d4f" style="--c:#ff4d4f" aria-label="珊瑚红"></button>
+      <button type="button" class="color" data-color="#4d7cff" style="--c:#4d7cff" aria-label="星空蓝"></button>
+      <button type="button" class="color" data-color="#3fd0a8" style="--c:#3fd0a8" aria-label="薄荷绿"></button>
+      <button type="button" class="color" data-color="#a06bff" style="--c:#a06bff" aria-label="暮光紫"></button>
+      <label class="color custom" title="自定义颜色"><input type="color" id="customColor" value="#ff7a2f" aria-label="自定义强调色" /><span>＋</span></label>
+    </div>
+    <div class="radius-row" id="radiusRow">
+      <span class="radius-label">圆角</span>
+      <button type="button" data-radius="0">8</button>
+      <button type="button" data-radius="1">12</button>
+      <button type="button" data-radius="2">20</button>
+      <button type="button" data-radius="3">28</button>
+      <button type="button" class="radius-auto" data-radius="auto">跟随</button>
+    </div>
+  </div>
+
+  <div class="group">
+    <div class="group-title">细节开关</div>
+    <label class="row"><span>橙色强调色</span><input type="checkbox" data-feature="accent" /></label>
+    <label class="row"><span>卡片圆角</span><input type="checkbox" data-feature="radius" /></label>
+    <label class="row"><span>复古图标贴纸</span><input type="checkbox" data-feature="icons" /></label>
+    <label class="row"><span>MIUI 状态条</span><input type="checkbox" data-feature="statusbar" /></label>
+    <label class="row"><span>角落米粉角标</span><input type="checkbox" data-feature="floating" /></label>
+  </div>
+
+  <div class="status" id="status" role="status" aria-live="polite">设置只保存在本机，不上传任何数据。</div>
+  <button class="reset" id="reset" type="button">恢复网页原样</button>
+  <p class="disclaimer">粉丝自制怀旧互动 · 非小米官方发布</p>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>

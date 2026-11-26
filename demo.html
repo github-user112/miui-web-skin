@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>网页 MIUI 化 · 效果演示</title>
+<link rel="stylesheet" href="skin.css" />
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: #f3f4f6; color: #1f2430;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+  }
+  .site-head { display:flex; align-items:center; justify-content:space-between; padding:22px 42px; background:#fff; border-bottom:1px solid #e5e7eb; }
+  .site-logo { font-size:22px; font-weight:800; letter-spacing:-.02em; }
+  .site-nav { display:flex; gap:20px; font-size:13px; color:#5c6472; }
+  .hero { padding:54px 42px 30px; }
+  .hero h1 { font-size:52px; line-height:1.15; margin:0 0 14px; letter-spacing:-.03em; }
+  .hero p { font-size:17px; color:#646c7a; line-height:1.8; max-width:760px; }
+  .hero .meta { margin-top:20px; font-size:12px; color:#98a0ad; }
+  .btn { border:1px solid #d7dbe2; background:#fff; color:#222; border-radius:6px; padding:11px 18px; font-size:13px; font-weight:700; cursor:pointer; margin-right:8px; }
+  .btn.primary { background:#2563eb; color:#fff; border-color:#2563eb; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; padding:10px 42px 40px; }
+  .card { background:#fff; border:1px solid #e5e7eb; border-radius:6px; padding:22px; }
+  .card h3 { font-size:17px; margin:0 0 8px; }
+  .card p { font-size:13px; color:#68707e; line-height:1.7; margin:0; }
+  .card .tag { display:inline-block; margin-top:14px; font-size:11px; color:#2563eb; background:#eef2ff; padding:5px 9px; border-radius:99px; }
+  .article { display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:34px; padding:0 42px 70px; }
+  .article-main { background:#fff; border:1px solid #e5e7eb; border-radius:6px; padding:30px; }
+  .article-main h2 { font-size:26px; margin:0 0 16px; }
+  .article-main p { font-size:15px; line-height:2; color:#4b5361; margin:0 0 16px; }
+  .side { background:#fff; border:1px solid #e5e7eb; border-radius:6px; padding:22px; }
+  .side h4 { font-size:14px; margin:0 0 14px; }
+  .side ul { list-style:none; padding:0; margin:0; }
+  .side li { font-size:12px; color:#68707e; padding:9px 0; border-bottom:1px solid #eef0f3; }
+  .dock { position:fixed; top:36px; right:16px; z-index:9999; width:250px; padding:14px; border-radius:16px; background:#101218; color:#fff; box-shadow:0 20px 50px rgba(0,0,0,.35); }
+  .dock h5 { font-size:12px; margin:0 0 4px; }
+  .dock p { font-size:9px; color:#8e95a3; margin:0 0 12px; }
+  .dock button { display:block; width:100%; min-height:34px; margin-bottom:7px; border-radius:9px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:#dfe3ea; font-size:11px; cursor:pointer; }
+  .dock button.on { border-color:#ff8a3d; background:rgba(255,138,61,.18); color:#ffb15c; font-weight:700; }
+  .dock .off { color:#ff8a3d; border-color:#ff8a3d; }
+  .caption { position:fixed; left:42px; bottom:42px; z-index:9998; font-size:26px; font-weight:800; color:#ff8a3d; color:var(--miui-accent,#ff8a3d); opacity:0; }
+  .caption.show { opacity:1; }
+  body.clean .dock, body.clean .caption { display:none; }
+  .hint { position:fixed; left:42px; bottom:96px; z-index:9998; font-size:12px; color:#7c8492; }
+  body.clean .hint { display:none; }
+</style>
+</head>
+<body>
+<header class="site-head">
+  <div class="site-logo">极客日报</div>
+  <nav class="site-nav"><span>首页</span><span>科技</span><span>数码</span><span>评测</span><span>关于</span></nav>
+</header>
+
+<section class="hero">
+  <div class="meta">数码 · 2026-11-25 · 阅读 3 分钟</div>
+  <h1>当网页穿上米粉皮肤：<br>一次关于审美的轻实验</h1>
+  <p>我们习惯了网页原本的样子。但如果点一下，就能把整个界面换成熟悉的橙色、圆角与复古图标，会不会想起第一次点亮屏幕的那种惊喜？</p>
+  <div style="margin-top:26px">
+    <button class="btn primary">阅读全文</button>
+    <button class="btn">收藏文章</button>
+    <button class="btn">分享给朋友</button>
+  </div>
+</section>
+
+<section class="cards">
+  <div class="card"><h3>复古 MIUI 1</h3><p>暖色纸张、方角卡片、扫描线纹理，回到论坛刷机的年代。</p><span class="tag">复古</span></div>
+  <div class="card"><h3>扁平 MIUI 6</h3><p>橙白配色与彩色贴纸，图标从拟物走向扁平的那一年。</p><span class="tag">扁平</span></div>
+  <div class="card"><h3>灵动 HyperOS</h3><p>深色玻璃、渐变发光、大圆角，人车家时代的视觉语言。</p><span class="tag">灵动</span></div>
+</section>
+
+<section class="article">
+  <article class="article-main">
+    <h2>一次点击，三重画风</h2>
+    <p>主题切换并不只是换一个颜色。强调色会改变链接与按钮，卡片获得圆角和阴影，角落里还会出现一枚小小的米粉角标，顶部则补上熟悉的信号与电量状态条。</p>
+    <p>所有样式都来自扩展包内的 CSS，不加载任何外部资源，也不读取或上传你的浏览数据。开关可以单独关闭某一种效果，随时一键恢复网页原样。</p>
+    <button class="btn">立即试试</button>
+  </article>
+  <aside class="side">
+    <h4>热门文章</h4>
+    <ul><li>一加与小米，谁更懂手感</li><li>十年前的安卓界面长什么样</li><li>为什么我们怀念周五更新</li><li>从 MIUI 到 HyperOS</li></ul>
+  </aside>
+</section>
+
+<div class="dock" id="dock">
+  <h5>网页 MIUI 化</h5>
+  <p>扩展入口（演示）· 点击切换主题</p>
+  <button type="button" data-skin="retro">MIUI 1 复古</button>
+  <button type="button" data-skin="flat">MIUI 6 扁平</button>
+  <button type="button" data-skin="hyper">HyperOS 灵动</button>
+  <button type="button" class="off" data-skin="off">恢复原样</button>
+</div>
+<div id="miui-web-skin-overlay">
+  <div class="miui-bar__status"><span class="miui-bar__time">9:41</span><span class="miui-bar__mark">MIUI</span><span class="miui-bar__signal">●●● ▰</span></div>
+  <div class="miui-float"><strong>MIUI 化 ✓</strong><small>粉丝自制 · 非官方</small></div>
+</div>
+<div class="hint">粉丝自制怀旧互动 · 非小米官方发布 · 效果演示</div>
+<div class="caption" id="caption"></div>
+
+<script>
+var params = new URLSearchParams(location.search);
+if (params.get('clean') === '1') document.body.classList.add('clean');
+function setSkin(name) {
+  var root = document.documentElement;
+  if (name === 'off') root.removeAttribute('data-miui-skin');
+  else root.setAttribute('data-miui-skin', name);
+  ['accent','radius','icons','statusbar','floating'].forEach(function (k) {
+    root.setAttribute('data-miui-feature-' + k, 'on');
+  });
+  root.setAttribute('data-miui-bar', name === 'off' ? 'off' : 'on');
+  root.setAttribute('data-miui-float', name === 'off' ? 'off' : 'on');
+  window.__skin = name;
+  document.querySelectorAll('.dock button').forEach(function (b) {
+    b.classList.toggle('on', b.dataset.skin === name);
+  });
+  var cap = document.getElementById('caption');
+  var labels = { retro:'MIUI 1 复古', flat:'MIUI 6 扁平', hyper:'HyperOS 灵动', off:'' };
+  cap.textContent = name === 'off' ? '' : labels[name] + ' ✓';
+  cap.classList.toggle('show', name !== 'off');
+}
+function setCustom(accent, radius) {
+  var style = document.documentElement.style;
+  if (accent) {
+    style.setProperty('--miui-accent', accent);
+    style.setProperty('--miui-accent-2', accent);
+  } else {
+    style.removeProperty('--miui-accent');
+    style.removeProperty('--miui-accent-2');
+  }
+  if (radius) style.setProperty('--miui-radius', radius + 'px');
+  else style.removeProperty('--miui-radius');
+}
+function tick() {
+  var n = document.querySelector('.miui-bar__time');
+  if (n) {
+    var d = new Date();
+    n.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+}
+document.querySelectorAll('.dock button[data-skin]').forEach(function (b) {
+  b.addEventListener('click', function () { setSkin(b.dataset.skin); setCustom(null, null); });
+});
+if (params.get('skin')) setSkin(params.get('skin'));
+window.setSkin = setSkin;
+window.setCustom = setCustom;
+window.setFrame = function (i) {
+  if (i < 18) { setSkin('off'); setCustom(null, null); }
+  else if (i < 52) { setSkin('retro'); setCustom(null, null); }
+  else if (i < 86) { setSkin('flat'); setCustom(null, null); }
+  else if (i < 120) { setSkin('hyper'); setCustom(null, null); }
+  else {
+    setSkin('hyper');
+    setCustom('#4d7cff', 28);
+    document.getElementById('caption').textContent = '自定义星空蓝 + 28px 圆角 ✓';
+  }
+};
+tick();
+window.setInterval(tick, 30000);
+setSkin(params.get('skin') || 'off');
+if (params.get('accent')) setCustom(params.get('accent'), params.get('radius') ? Number(params.get('radius')) : null);
+</script>
+</body>
+</html>
